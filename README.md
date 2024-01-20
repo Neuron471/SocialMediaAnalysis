@@ -8,13 +8,16 @@ The project is built using the following:
 ![Social Media Analysis](./assets/stackproject.png)
 
 - **Fake Stream Data:**
-- | ID | Kota            | Sosial Media   | Jumlah User   | Total Penjualan (USD) | Timestamp (Unix)      |
+
+
+| ID | Kota            | Sosial Media   | Jumlah User   | Sales | Timestamp (Unix)      |
 |---|-----------------|----------------|---------------|------------------------|------------------------|
 | 1 | Jakarta         | Instagram      | 1000          | 10000                  | 1642675200             |
 | 2 | Bogor           | Facebook       | 1500          | 15500                  | 1642677000             |
 | 3 | Depok           | Tiktok         | 800           | 8200                   | 1642678800             |
 | 4 | Tangerang       | Telegram       | 1200          | 12800                  | 1642680600             |
 | 5 | Bekasi          | Platform X      | 600           | 6500                   | 1642682400             |
+
 
 - **Social Media Platforms:**
   - Platform X
