@@ -10,7 +10,7 @@ The project is built using the following:
 - **Fake Stream Data:**
 
 
-| ID | Kota            | Sosial Media   | Jumlah User   | Sales | Timestamp (Unix)      |
+| ID | City            | Social Media   | Usage Count  | Sales | Timestamp (Unix)      |
 |---|-----------------|----------------|---------------|------------------------|------------------------|
 | 1 | Jakarta         | Instagram      | 1000          | 10000                  | 1642675200             |
 | 2 | Bogor           | Facebook       | 1500          | 15500                  | 1642677000             |
@@ -26,30 +26,4 @@ The project is built using the following:
   - Facebook
   - Tiktok
 
-## Installation
 
-Follow these steps to install the project:
-
-1. Clone this repository to your local machine.
-2. [Add installation steps if necessary]
-
-## Usage
-
-User guide for the project:
-
-1. [Steps or commands to run the project]
-2. [Instructions for using key features]
-
-## Contribution
-
-If you wish to contribute to this project, please follow the contribution guidelines.
-
-## License
-
-This project is licensed under [type of license]. See the [LICENSE.md](./LICENSE.md) file for more information.
-
-## Contact
-
-If you have any questions or would like to communicate about this project, please contact us at [email address or other communication platform].
-
-Thank you for your interest in the Social Media Analysis project!
