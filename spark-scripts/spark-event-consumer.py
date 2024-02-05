@@ -17,10 +17,10 @@ kafka_host = os.getenv("KAFKA_HOST")
 kafka_topic = os.getenv("KAFKA_TOPIC_NAME")
 
 # PostgreSQL database connection details
-PG_HOST = 'ep-winter-band-34900791.ap-southeast-1.aws.neon.tech'
-PG_DATABASE = 'SocmedDB'
-PG_USER = 'farahduta7'
-PG_PASSWORD = 'Mf9qmk0iKZhU'
+PG_HOST = os.getenv("PG_HOST")
+PG_DATABASE = os.getenv("PG_DATABASE")
+PG_USER = os.getenv("PG_USER")
+PG_PASSWORD = os.getenv("PG_PASSWORD")
 
 # Spark master URL
 spark_host = f"spark://{spark_hostname}:{spark_port}"
@@ -29,17 +29,18 @@ spark_host = f"spark://{spark_hostname}:{spark_port}"
 os.environ[
     "PYSPARK_SUBMIT_ARGS"
 ] = "--packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.2 org.postgresql:postgresql:42.2.18"
+ 
 
-# Initialize or retrieve SparkContext with appropriate configuration
-sparkcontext = pyspark.SparkContext.getOrCreate(
-    conf=(pyspark.SparkConf().setAppName("DibimbingStreaming").setMaster(spark_host))
-)
+# Create or retrieve SparkSession with appropriate configuration
+spark = pyspark.sql.SparkSession.builder \
+    .appName("SocialMedia") \
+    .config("spark.master", spark_host) \
+    .config("spark.sql.streaming.checkpointLocation", "/tmp/spark-checkpoint") \
+    .getOrCreate()
 
 # Set log level for Spark
-sparkcontext.setLogLevel("WARN")
+spark.sparkContext.setLogLevel("WARN")
 
-# Create or retrieve SparkSession
-spark = pyspark.sql.SparkSession(sparkcontext.getOrCreate())
 
 # Define the schema for Kafka messages
 kafka_schema = StructType([
@@ -69,7 +70,7 @@ parsed_df = stream_df.select(from_json(col("value").cast("string"), kafka_schema
     .withColumn("Ts", from_unixtime("Ts").cast(TimestampType())) \
     .withColumn("ConversionRate", expr("(Conversion/Visitors)*100")) \
     .withColumn("BounceRate", expr("(PageVisitors/Visitors)*100")) \
-    .withWatermark("Ts", "5 minutes")  # Set watermark with a 5-minute handled late data
+    .withWatermark("Ts", "10 minutes")  # Set watermark with a 5-minute handled late data
 
 # Define the function to write to PostgreSQL
 def write_to_postgresql(batch_df, batch_id):
@@ -90,7 +91,7 @@ query = (
     parsed_df.writeStream
     .outputMode("append")
     .foreachBatch(write_to_postgresql)
-    .trigger(processingTime="7 seconds")  # Set processing time to 7 seconds
+    .trigger(processingTime="10 seconds")  # Set processing time to 10 seconds
     .start()
 )
 
